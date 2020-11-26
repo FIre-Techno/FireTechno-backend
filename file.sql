@@ -4,7 +4,7 @@ CREATE TABLE users
   email VARCHAR(50) NOT NULL,
   password VARCHAR(50) NOT NULL,
   created_at DATETIME,
-  phone VARCHAR(30) NOT NULL,
+  phone VARCHAR(30),
   status INT NOT NULL,
   gcm_token VARCHAR(200) NOT NULL,
   PRIMARY KEY (id)
@@ -101,8 +101,8 @@ CREATE TABLE profiles
 (
   id INT NOT NULL,
   username VARCHAR(100) NOT NULL,
-  address LONGTEXT NOT NULL,
-  postcode VARCHAR(15) NOT NULL,
+  address LONGTEXT,
+  postcode VARCHAR(15),
   created_at DATETIME,
   id_user INT,
   id_city INT,
