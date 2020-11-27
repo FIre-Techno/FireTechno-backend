@@ -10,6 +10,9 @@ mysql.connect((err) => {
   console.log(err ? err : "database working");
 });
 const indexRouter = require("./src/routes/index");
+const bubbleChatRouter = require("./src/routes/bubble_chat");
+const destinationsRouter = require("./src/routes/destinations");
+const notificationRouter = require("./src/routes/notification");
 
 const app = express();
 dotenv.config();
@@ -23,6 +26,9 @@ app.use(cookieParser());
 
 app.use("*", cors("*"));
 app.use("/", indexRouter);
+app.use("/chat", bubbleChatRouter);
+app.use("/destination", destinationsRouter);
+app.use("/notification", notificationRouter);
 
 // Gunain middleware kek gini buat cek token jwt
 // app.use("/", middleware, indexRouter);
