@@ -1,6 +1,6 @@
 CREATE TABLE users
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(50) NOT NULL,
   password VARCHAR(50) NOT NULL,
   created_at DATETIME,
@@ -12,14 +12,14 @@ CREATE TABLE users
 
 CREATE TABLE cities
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE destinations
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL,
   photo VARCHAR(255) NOT NULL,
   status INT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE destinations
 
 CREATE TABLE airports
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   photo VARCHAR(255) NOT NULL,
   star VARCHAR(10) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE airports
 
 CREATE TABLE classes
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL,
   price VARCHAR(100) NOT NULL,
   estimate VARCHAR(100) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE classes
 
 CREATE TABLE transactions
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   unique_code VARCHAR(100) NOT NULL,
   status INT NOT NULL,
   departure_at DATETIME,
@@ -66,18 +66,19 @@ CREATE TABLE transactions
 
 CREATE TABLE notifications
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   is_open INT NOT NULL,
   title VARCHAR(255) NOT NULL,
   description LONGTEXT NOT NULL,
   created_at DATETIME,
   id_user INT,
+  PRIMARY KEY (id),
   FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE chats
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   created_at DATETIME,
   message LONGTEXT NOT NULL,
   id_sender INT,
@@ -89,23 +90,25 @@ CREATE TABLE chats
 
 CREATE TABLE bubble_chat
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   total VARCHAR(100) NOT NULL,
   id_sender INT,
   id_receiver INT,
+  PRIMARY KEY (id),
   FOREIGN KEY (id_sender) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
   FOREIGN KEY (id_receiver) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE profiles
 (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(100) NOT NULL,
   address LONGTEXT,
   postcode VARCHAR(15),
   created_at DATETIME,
   id_user INT,
   id_city INT,
+  PRIMARY KEY (id),
   FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
   FOREIGN KEY (id_city) REFERENCES cities(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
