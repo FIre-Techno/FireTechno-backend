@@ -16,13 +16,10 @@ const idValidate = (req, res, next) => {
 
 const patchValidate = (req, res, next) => {
   const schema = Joi.object({
-    id: Joi.number(),
-    email: Joi.string().email({ minDomainSegments: 2 }),
-    currentPassword: Joi.string().min(8),
-    password: Joi.string().min(8),
-    phone: Joi.string(),
-    gcm_token: Joi.string(),
-    created_at: Joi.string(),
+    id: Joi.number().required(),
+    name: Joi.string(),
+    star: Joi.string(),
+    review: Joi.string(),
   });
   const validate = schema.validate(req.body);
 
@@ -34,11 +31,11 @@ const patchValidate = (req, res, next) => {
 };
 
 const postValidate = (req, res, next) => {
+  console.log(req.file);
   const schema = Joi.object({
-    email: Joi.string().email({ minDomainSegments: 2 }).required(),
-    password: Joi.string().min(8).required(),
-    phone: Joi.string().required(),
-    gcm_token: Joi.string().required(),
+    name: Joi.string().required(),
+    star: Joi.string(),
+    review: Joi.string(),
   });
 
   const validate = schema.validate(req.body);
