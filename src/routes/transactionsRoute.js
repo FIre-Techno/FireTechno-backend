@@ -7,10 +7,16 @@ const {
     PatchTransactions,
     DeleteTransactions,
 } = require('../controllers/transactions')
+
+const {
+    validatePost,
+    validatePatch
+} = require('../middlewares/schemaTransactions')
+
 router
     .get("/", GetAllTransactions)
     .get("/:id", GetIdTransactions)
-    .post("/", PostTransactions)
+    .post("/", validatePost, PostTransactions)
     .patch("/:id", PatchTransactions)
     .delete("/:id", DeleteTransactions)
 module.exports = router;

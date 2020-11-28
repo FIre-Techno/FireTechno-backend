@@ -2,7 +2,8 @@ const { resCustom, customResponse } = require("../helpers/res");
 const chatsModels = require("../models/chats")
 
 const getLastMessage = async (req, res) => {
-    // req.io.emit
+    req.socket.emit
+    console.log(req.socket.emit)
     const { id_user } = req.params;
     const { search } = req.query || '';
 
@@ -40,6 +41,7 @@ const getIdMessage = async (req, res) => {
 
 const postMessage = async (req, res) => {
     const setData = req.body;
+    // console.log(req)
     try {
         const result = await chatsModels.postMessage(setData);
         const response = customResponse(200, "Success insert chat", {

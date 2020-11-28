@@ -2,7 +2,7 @@ const query = require('../helpers/query');
 
 module.exports = {
     getLastMessage: (id_user, search) => query(
-        `select m.*, users.email 
+        `select m.*, profiles.username
         from  chats m 
         left join chats m1 on (
             (
@@ -15,9 +15,11 @@ module.exports = {
         ) 
         INNER JOIN users 
         on (m.id_sender = users.id OR m.id_receiver = users.id) 
-        WHERE users.id != ${id_user} 
+        INNER JOIN profiles
+        on (m.id_sender = profiles.id OR m.id_receiver = profiles.id) 
+        WHERE users.id != ${id_user} AND profiles.id != ${id_user}
         AND m1.id is null and ${id_user} in(m.id_sender, m.id_receiver) 
-        AND (m.message like '%${search}%' OR users.email like '%${search}%') GROUP BY m.id
+        AND (m.message like '%${search}%' OR profiles.username like '%${search}%') GROUP BY m.id
         ORDER BY created_at DESC`
     ),
     getIdMessage: (id_sender, id_receiver) => query(
