@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { resCustom, customResponse } = require('../helpers/res')
 
 const validatePost = (res, req, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const schema = Joi.object({
         message: Joi.string().required(),
         id_sender: Joi.number().required(),

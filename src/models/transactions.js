@@ -1,13 +1,13 @@
 const query = require("../helpers/query")
 
 const getAllTransactions = `
-SELECT t.*, u.email, c.name
+SELECT t.*, u.email, c.name, c.terminal, c.gate
 from transactions as t
 inner join users as u on u.id = t.id_user
 inner join classes as c on c.id = t.id_class`
 
 const getIdTransactions = `
-SELECT t.*, u.email, c.name
+SELECT t.*, u.email, c.name, c.terminal, c.gate
 from transactions as t
 inner join users as u on u.id = t.id_user
 inner join classes as c on c.id = t.id_class where t.id = ?`
