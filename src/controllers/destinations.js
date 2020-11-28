@@ -21,7 +21,10 @@ module.exports = {
   postData: async (req, res) => {
     try {
       const setData = req.body;
-      const result = await destinationsModel.postData(setData);
+      const result = await destinationsModel.postData({
+        ...setData,
+        photo: req.file.filename,
+      });
       const response = customResponse(201, "Success", result);
 
       resCustom(res, response);
@@ -34,10 +37,20 @@ module.exports = {
     try {
       const { id } = req.params;
       const setData = req.body;
-      const result = await destinationsModel.editData(id, setData);
-      const response = customResponse(201, "Success", result);
+      if (!req.file) {
+        const result = await destinationsModel.editData(id, setData);
+        const response = customResponse(201, "Success", result);
 
-      resCustom(res, response);
+        resCustom(res, response);
+      } else {
+        const result = await destinationsModel.editData(id, {
+          ...setData,
+          photo: req.file.filename,
+        });
+        const response = customResponse(201, "Success", result);
+
+        resCustom(res, response);
+      }
     } catch (err) {
       const response = customResponse(400, { message: err.message });
       resCustom(res, response);
