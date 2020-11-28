@@ -22,12 +22,8 @@ module.exports = {
     ),
     getIdMessage: (id_sender, id_receiver) => query(
         `SELECT
-            chats.id,
-            chats.id_sender,
-            users.email as sender_name,
-            chats.id_receiver,
-            chats.message,
-            chats.created_at
+            chats.*,
+            users.email as sender_name
         FROM chats INNER JOIN users
         ON users.id=chats.id_sender
         WHERE
@@ -35,8 +31,8 @@ module.exports = {
         ||
             (id_sender=${id_receiver} AND id_receiver=${id_sender})`
     ),
-    postMessage: () => query(`insert into chats set ?`)
-
-
+    postMessage: (setData) => query(`insert into chats set ?`, setData),
+    patchMessage: (setData, id) => query('Update chats set ? where id=?', [setData, id]),
+    deleteMessage: (id) => query('delete from chats where id=?', id)
     
 }

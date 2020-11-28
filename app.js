@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("*", cors("*"));
-// app.use("/", indexRouter);
+app.use("/", indexRouter);
 app.use('/', chatsRoute);
 
 // Gunain middleware kek gini buat cek token jwt
