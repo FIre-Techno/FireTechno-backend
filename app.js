@@ -12,6 +12,7 @@ mysql.connect((err) => {
 
 const indexRouter = require("./src/routes/index");
 const chatsRoute = require("./src/routes/chatsRoute");
+const profilesRoute = require("./src/routes/profilesRoute");
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use("*", cors("*"));
 app.use("/", indexRouter);
 app.use('/', chatsRoute);
+app.use('/profiles', profilesRoute);
 
 // Gunain middleware kek gini buat cek token jwt
 // app.use("/", middleware, indexRouter);
