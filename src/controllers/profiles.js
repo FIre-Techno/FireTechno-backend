@@ -35,7 +35,11 @@ const GetIdProfiles = async (req, res) => {
 }
 
 const PostProfiles = async (req, res) => {
-    const setData = req.body;
+    const setData = {...req.body};
+    console.log(req.file, 'ini')
+    // if (req.file) {
+    //     photo = req.file.filename
+    // }
     try {
         const result = await postProfiles(setData);
         const response = customResponse(200, "Success", {

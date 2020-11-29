@@ -13,10 +13,12 @@ const {
     validatePatch
 } = require('../middlewares/schemaProfiles')
 
+const multer = require('../middlewares/multer')
+
 router
     .get("/", GetAllProfiles)
     .get("/:id", GetIdProfiles)
-    .post("/", validatePost, PostProfiles)
-    .patch("/:id", PatchProfiles)
+    .post("/", multer, validatePost, PostProfiles)
+    .patch("/:id", multer, PatchProfiles)
     .delete("/:id", DeleteProfiles)
 module.exports = router;
