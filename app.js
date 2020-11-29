@@ -10,6 +10,7 @@ mysql.connect((err) => {
   console.log(err ? err : "database working");
 });
 const indexRouter = require("./src/routes/index");
+const bubbleChatRouter = require("./src/routes/bubble_chat");
 const userRouter = require("./src/routes/user");
 const classesRouter = require("./src/routes/classes");
 const airportRouter = require("./src/routes/airport");
@@ -26,6 +27,7 @@ app.use(cookieParser());
 
 app.use("*", cors("*"));
 app.use("/", indexRouter);
+app.use("/chat", bubbleChatRouter);
 app.use("/", userRouter);
 app.use("/", classesRouter);
 app.use("/", airportRouter);
