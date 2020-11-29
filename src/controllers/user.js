@@ -39,30 +39,12 @@ const getUser = async (req, res) => {
 */
 
 const patchUser = async (req, res) => {
-  const { id, password, currentPassword } = req.body;
+  const { id } = req.body;
   const data = req.body;
-  delete data.id;
-  delete data.password;
-  delete data.currentPassword;
-  console.log(password, currentPassword);
   try {
-    if (!password) {
-      await userModel.patchUser(data, id);
-      const response = customResponse(400, "Success Patch data.");
-      resCustom(res, response);
-    }
-    const response = await userModel.getPassword(id);
-    console.log(response[0].password);
-    // console.log(response.TextRow.password);
-    const compare = bcrypt.compareSync(currentPassword, response[0].password);
-    console.log(compare);
-    if (!compare) resCustom(res, { status: 500, msg: "Wrong Password." });
-    bcrypt.hash(password, 10, async (error, hashPassword) => {
-      if (error) resCustom(res, { status: 500, msg: "Internal Server Error" });
-      await userModel.patchUser({ ...data, password: hashPassword }, id);
-      const response = customResponse(400, "Success Patch data.");
-      resCustom(res, response);
-    });
+    await userModel.patchUser(data, id);
+    const response = customResponse(400, "Success Patch data.");
+    resCustom(res, response);
   } catch (error) {
     const response = customResponse(500, "Bad Request");
     resCustom(res, response);
@@ -81,7 +63,7 @@ const postUser = async (req, res) => {
   delete data.password;
   try {
     const hashPassword = bcrypt.hashSync(password, 10);
-    // if (error) resCustom(res, { status: 500, msg: "Internal Server Error." });
+    console.log(hashPassword);
     await userModel.postUser({ ...data, password: hashPassword });
     const response = customResponse(400, "Success Post Data.");
     resCustom(res, response);

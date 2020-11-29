@@ -18,8 +18,6 @@ const patchValidate = (req, res, next) => {
   const schema = Joi.object({
     id: Joi.number(),
     email: Joi.string().email({ minDomainSegments: 2 }),
-    currentPassword: Joi.string().min(8),
-    password: Joi.string().min(8),
     phone: Joi.string(),
     gcm_token: Joi.string(),
     created_at: Joi.string(),
