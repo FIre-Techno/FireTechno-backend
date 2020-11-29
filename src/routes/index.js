@@ -18,7 +18,7 @@ const exampleValidate = (req, res, next) => {
   next();
 };
 
-/* example */
+/* example once*/
 router
   .get("/", function (req, res, next) {
     res.json({

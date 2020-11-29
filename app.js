@@ -14,6 +14,11 @@ const indexRouter = require("./src/routes/index");
 const chatsRoute = require("./src/routes/chatsRoute");
 const profilesRoute = require("./src/routes/profilesRoute");
 const transactionsRoute = require("./src/routes/transactionsRoute");
+const bubbleChatRouter = require("./src/routes/bubble_chat");
+const destinationsRouter = require("./src/routes/destinations");
+const userRouter = require("./src/routes/user");
+const classesRouter = require("./src/routes/classes");
+const airportRouter = require("./src/routes/airport");
 
 const app = express();
 dotenv.config();
@@ -30,6 +35,11 @@ app.use("/", indexRouter);
 app.use('/', chatsRoute);
 app.use('/profiles', profilesRoute);
 app.use('/transactions', transactionsRoute);
+app.use("/chat", bubbleChatRouter);
+app.use("/destination", destinationsRouter);
+app.use("/", userRouter);
+app.use("/", classesRouter);
+app.use("/", airportRouter);
 
 // Gunain middleware kek gini buat cek token jwt
 // app.use("/", middleware, indexRouter);
