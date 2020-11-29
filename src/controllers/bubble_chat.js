@@ -18,6 +18,20 @@ module.exports = {
     }
   },
 
+  getChat: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await chatModel.getChat(id);
+      const response = customResponse(200, "Success", result);
+
+      resCustom(res, response);
+    } catch(err) {
+      const response = customResponse(404, err.message);
+
+      resCustom(res, response);
+    }
+  },
+
   deleteChat: async (req, res) => {
     try {
       const { id } = req.params;
