@@ -1,55 +1,17 @@
-const db = require("../configs/mysql");
+const query = require('../helpers/query');
 
 module.exports = {
-  getAllChats: () => {
-    return new Promise((resolve, reject) => {
-      let sql = `SELECT * FROM bubble_chat`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  deleteChat: (id) => {
-    return new Promise((resolve, reject) => {
-      let sql = `DELETE FROM bubble_chat WHERE id=${id}`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  postMessage: (body) => {
-    return new Promise((resolve, reject) => {
-      let sql = `INSERT INTO bubble_chat SET ?`;
-      db.query(sql, body, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  editMessage: (id, setData) => {
-    return new Promise((resolve, reject) => {
-      let sql = `UPDATE bubble_chat SET ? WHERE id = ${id}`;
-      db.query(sql, [setData, id], (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
+  getAllChats: () => query(`
+  SELECT
+    a.id, a.total, a.id_sender, a.id_receiver,
+    b.email,
+    c.username, c.id_user
+  FROM bubble_chat AS a
+  INNER JOIN users AS b
+    ON a.id_sender = b.id
+  INNER JOIN profiles AS c
+    ON b.id = c.id_user`),
+  postMessage: setData => query(`INSERT INTO bubble_chat SET ?`, setData),
+  deleteChat: id => query(`DELETE FROM bubble_chat WHERE id = ${id}`),
+  editMessage: (id, setData) => query(`UPDATE bubble_chat SET ? bubble`, [setData, id])
 };
