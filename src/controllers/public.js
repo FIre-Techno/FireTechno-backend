@@ -5,6 +5,8 @@ const {
   searchDestinations,
 } = require("../models/destinations");
 
+const { getClass, getClassType } = require("../models/classes");
+
 const allCities = async (req, res) => {
   try {
     const cities = await getCities();
@@ -27,6 +29,7 @@ const allDestination = async (req, res) => {
     const response = customResponse(200, "Success", destinations);
     return resCustom(res, response);
   } catch (error) {
+    console.log(error);
     const response = customResponse(500, "Internal Server Error");
     return resCustom(res, response);
   }
@@ -48,5 +51,36 @@ const findDestination = async (req, res) => {
   }
 };
 
-const getClasses = async (req, res) => {};
-module.exports = { allCities, allDestination, findDestination };
+const getClasses = async (req, res) => {
+  const { type, id_destination } = req.query;
+  try {
+    const classes = await getClassType(type, id_destination);
+    const response = customResponse(200, "Success", classes);
+    return resCustom(res, response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const oneClass = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const classes = await getClass({ "a.id": id });
+    const response = customResponse(
+      200,
+      "Success",
+      classes[0] ? classes[0] : {}
+    );
+    return resCustom(res, response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  allCities,
+  allDestination,
+  findDestination,
+  getClasses,
+  oneClass,
+};

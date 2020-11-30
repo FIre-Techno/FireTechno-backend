@@ -6,10 +6,15 @@ const {
   allCities,
   allDestination,
   findDestination,
+  getClasses,
+  oneClass,
 } = require("../controllers/public");
 
-router.get("/city", allCities);
-router.get("/destination", allDestination);
-router.get("/destination/find", findDestination);
+router
+  .get("/city", allCities)
+  .get("/destination", allDestination)
+  .get("/destination/find", findDestination)
+  .get("/classes", getClasses)
+  .get("/classes/:id", oneClass);
 
 module.exports = router;

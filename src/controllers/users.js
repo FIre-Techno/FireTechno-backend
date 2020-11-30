@@ -2,7 +2,6 @@ const { resCustom, customResponse } = require("../helpers/res");
 const { getUser, patchUser } = require("../models/user");
 const { patchProfiles, getIdProfiles } = require("../models/profiles");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const userDetail = async (req, res) => {
   const { id } = req.token;
@@ -21,6 +20,8 @@ const userDetail = async (req, res) => {
     return resCustom(res, response);
   }
 };
+
+const transactions = async (req, res) => {};
 
 const editPassword = async (req, res) => {
   const { id } = req.token;
@@ -60,7 +61,6 @@ const editPhone = async (req, res) => {
 
 const editProfile = async (req, res) => {
   const { id } = req.token;
-  const { username } = req.body;
   try {
     const user = await getIdProfiles({ "p.id_user": id });
     await patchProfiles(req.body, user[0].id);
@@ -68,7 +68,6 @@ const editProfile = async (req, res) => {
     const response = customResponse(200, "Profile been changed");
     return resCustom(res, response);
   } catch (error) {
-    console.log(error);
     const response = customResponse(500, "Internal Server Error");
     return resCustom(res, response);
   }
