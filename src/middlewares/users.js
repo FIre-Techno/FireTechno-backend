@@ -52,4 +52,22 @@ const userEdit = (req, res, next) => {
   next();
 };
 
-module.exports = { userPassword, userPhone, userEdit };
+const userTransaction = (res, req, next) => {
+  const schema = Joi.object({
+    type: Joi.number().required(),
+    from: Joi.string().required(),
+    child: Joi.number().required(),
+    adult: Joi.number().required(),
+    departure_at: Joi.date().required(),
+    id_class: Joi.number().required(),
+  });
+
+  const validate = schema.validate(req.body);
+  if (validate.error) {
+    return resCustom(res, customResponse(400, validate.error.message));
+  }
+
+  next();
+};
+
+module.exports = { userPassword, userPhone, userEdit, userTransaction };

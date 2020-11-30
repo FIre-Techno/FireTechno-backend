@@ -1,6 +1,10 @@
 const { resCustom, customResponse } = require("../helpers/res");
 const { getUser, patchUser } = require("../models/user");
 const { patchProfiles, getIdProfiles } = require("../models/profiles");
+const {
+  getIdTransactions,
+  postTransactions,
+} = require("../models/transactions");
 const bcrypt = require("bcryptjs");
 
 const userDetail = async (req, res) => {
@@ -21,7 +25,54 @@ const userDetail = async (req, res) => {
   }
 };
 
-const transactions = async (req, res) => {};
+const getTransactions = async (req, res) => {
+  const { id } = req.token;
+  try {
+    const transaction = await getIdTransactions({ "a.id_user": id });
+
+    const response = customResponse(200, "Success", transaction);
+    return resCustom(res, response);
+  } catch (error) {
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
+  }
+};
+
+const getDetailTransaction = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const transaction = await getIdTransactions({ "a.id": id });
+
+    const response = customResponse(
+      200,
+      "Success",
+      transaction[0] ? transaction[0] : {}
+    );
+    return resCustom(res, response);
+  } catch (error) {
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
+  }
+};
+
+const addTransaction = async (req, res) => {
+  const { id } = req.token;
+  try {
+    const insertTransaction = await postTransactions({
+      ...req.body,
+      id_user: id,
+    });
+
+    const response = customResponse(200, "Success", {
+      id: insertTransaction.insertId,
+    });
+    return resCustom(res, response);
+  } catch (error) {
+    console.log(error);
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
+  }
+};
 
 const editPassword = async (req, res) => {
   const { id } = req.token;
@@ -73,4 +124,12 @@ const editProfile = async (req, res) => {
   }
 };
 
-module.exports = { userDetail, editPassword, editPhone, editProfile };
+module.exports = {
+  userDetail,
+  editPassword,
+  editPhone,
+  editProfile,
+  getTransactions,
+  getDetailTransaction,
+  addTransaction,
+};
