@@ -3,22 +3,22 @@ const query = require("../helpers/query");
 const getUsers = `
 SELECT 
   a.*, b.username, b.address, 
-  b.postcode, c.name
+  b.postcode, c.name AS city
 FROM users AS a 
 INNER JOIN profiles AS b 
   ON a.id = b.id_user 
-INNER JOIN cities AS c
+LEFT JOIN cities AS c
   ON c.id = b.id_city
 `;
 
 const getUser = `
 SELECT 
   a.*, b.username, b.address, 
-  b.postcode, c.name
+  b.postcode, c.name AS city
 FROM users AS a 
 INNER JOIN profiles AS b 
   ON a.id = b.id_user 
-INNER JOIN cities AS c
+LEFT JOIN cities AS c
   ON c.id = b.id_city
 WHERE ?
 `;

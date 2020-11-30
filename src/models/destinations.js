@@ -2,55 +2,18 @@ const db = require("../configs/mysql");
 const query = require("../helpers/query");
 
 module.exports = {
-  getAllData: () => {
-    return new Promise((resolve, reject) => {
-      let sql = `SELECT * FROM destinations`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  postData: (setData) => {
-    return new Promise((resolve, reject) => {
-      let sql = `INSERT INTO destinations SET ?`;
-      db.query(sql, setData, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  editData: (id, setData) => {
-    return new Promise((resolve, reject) => {
-      let sql = `UPDATE destinations SET ? WHERE id = ${id}`;
-      db.query(sql, [setData, id], (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  deleteData: (id) => {
-    return new Promise((resolve, reject) => {
-      let sql = `DELETE FROM destinations WHERE id = ${id}`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          reject(new Error(err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
+  getDestinations: (limit = 5, offset = 1) =>
+    query("SELECT * FROM destinations LIMIT ? OFFSET ?", [
+      limit,
+      (offset - 1) * limit,
+    ]),
+  searchDestinations: (name, limit = 5, offset = 1) =>
+    query(
+      "SELECT * FROM destinations WHERE name LIKE ? OR city LIKE ? LIMIT ? OFFSET ?",
+      [name + "%", name + "%", limit, (offset - 1) * limit]
+    ),
+  addDestination: () => query("INSERT INTO destinations SET ?", [data]),
+  deleteDestination: () => query("DELETE FROM destinations WHERE id = ?", [id]),
+  updateDestination: () =>
+    query("UPDATE destinations SET ? WHERE id = ?", [data, id]),
 };
