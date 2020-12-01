@@ -11,6 +11,7 @@ const getAllTransactions = `
 SELECT 
     *, b.username, c.type, c.estimate, 
     c.terminal, c.gate, d.photo AS airport_photo,
+    d.name AS airport_name,
     e.name AS destination, e.city AS city
 FROM transactions AS a
 INNER JOIN profiles AS b
@@ -25,6 +26,7 @@ INNER JOIN destinations AS e
 const getIdTransactions = `
 SELECT 
     a.*, b.username, c.type, c.estimate, 
+    d.name AS airport_name,
     c.terminal, c.gate, d.photo AS airport_photo,
     e.name AS destination, e.city AS city
 FROM transactions AS a
@@ -45,9 +47,9 @@ const patchTransactions = `Update transactions set ? where id=?`;
 const deleteTransactions = `delete from transactions where id=?`;
 
 module.exports = {
-  getAllTransactions: () => query(getAllTransactions),
-  getIdTransactions: (id) => query(getIdTransactions, id),
-  postTransactions: (setData) => query(postTransactions, setData),
-  patchTransactions: (setData, id) => query(patchTransactions, [setData, id]),
-  deleteTransactions: (id) => query(deleteTransactions, id),
+    getAllTransactions: () => query(getAllTransactions),
+    getIdTransactions: (id) => query(getIdTransactions, id),
+    postTransactions: (setData) => query(postTransactions, setData),
+    patchTransactions: (setData, id) => query(patchTransactions, [setData, id]),
+    deleteTransactions: (id) => query(deleteTransactions, id),
 };
