@@ -4,6 +4,8 @@ const logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const admin =  require('firebase-admin');
+const serviceAccount =  require('./credential/ankasa-59210-firebase-adminsdk-xuymg-b81fe9cff6.json')
 const mysql = require("./src/configs/mysql");
 
 const verify = require("./src/middlewares/auth");
@@ -29,6 +31,34 @@ const prefix = process.env.PREFIX_URL;
 mysql.connect((err) => {
   console.log(err ? err : "database working");
 });
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://ankasa-59210.firebaseio.com"
+});    
+/// firebase
+
+          const registrationToken = 'd7FvKIqER9ysIyjqiPKFph:APA91bHKKLF-bpEDxhHWc2QK8nHgURAT3mSLkw6YuFcPPf1XfWytaYN2jSVjfvhXZGn9fo7uH5ZzZ3CGHXrpTqkJ9sO-1VAFkXdbvEwYjIG2cpmrJXYNRHwcSoYgsXCf7EWrC_tZSSHc'
+  const payload = {
+    notification: {
+      title: 'Zwallet',
+      body: `you just receive money from  as much as Rp`
+    }            
+  };
+
+  admin.messaging().sendToDevice(registrationToken, payload)
+    .then(function(response) {
+      // See the MessagingDevicesResponse reference documentation for
+      // the contents of response.
+      console.log('Successfully sent message:', response);
+    })
+    .catch(function(error) {
+      console.log('Error sending message:', error);
+    });          
+
+/// firebase
+ 
+
 
 app.use(cors("*"));
 app.use(logger("dev"));
