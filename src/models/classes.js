@@ -3,7 +3,7 @@ const query = require("../helpers/query");
 const getClasses = `
 SELECT 
   a.id, a.name, a.type, a.price, a.estimate,
-  a.terminal, a.gate, b.name AS destination,
+  a.terminal, a.gate, b.name AS destination, b.city,
   b.photo AS dest_photo, b.status AS dest_status,
   c.name AS air_name, c.photo AS air_photo, 
   c.star AS air_star, c.review AS air_review 
@@ -17,7 +17,7 @@ INNER JOIN airports AS c
 const getClass = `
 SELECT 
   a.id, a.name, a.type, a.price, a.estimate,
-  a.terminal, a.gate, b.name AS destination,
+  a.terminal, a.gate, b.name AS destination, b.city,
   b.photo AS dest_photo, b.status AS dest_status,
   c.name AS air_name, c.photo AS air_photo, 
   c.star AS air_star, c.review AS air_review 
@@ -32,7 +32,7 @@ WHERE ?
 const getClassType = `
 SELECT 
   a.id, a.name, a.type, a.price, a.estimate,
-  a.terminal, a.gate, b.name AS destination,
+  a.terminal, a.gate, b.name AS destination, b.city,
   b.photo AS dest_photo, b.status AS dest_status,
   c.name AS air_name, c.photo AS air_photo, 
   c.star AS air_star, c.review AS air_review 
