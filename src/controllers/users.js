@@ -1,10 +1,16 @@
 const { resCustom, customResponse } = require("../helpers/res");
 const { getUser, patchUser } = require("../models/user");
-const { patchProfiles, getIdProfiles } = require("../models/profiles");
+const {
+  patchProfiles,
+  patch2Profiles,
+  getIdProfiles,
+} = require("../models/profiles");
 const {
   getIdTransactions,
   postTransactions,
 } = require("../models/transactions");
+const { getNotif } = require("../models/notifications");
+
 const bcrypt = require("bcryptjs");
 
 const userDetail = async (req, res) => {
@@ -52,6 +58,38 @@ const getDetailTransaction = async (req, res) => {
   } catch (error) {
     const response = customResponse(500, "Internal Server Error");
     return resCustom(res, response);
+  }
+};
+
+const getNotification = async (req, res) => {
+  const { id } = req.token;
+  try {
+    const notif = await getNotif({ id_user: id });
+    const response = customResponse(200, "Success", notif);
+    return resCustom(res, response);
+  } catch (error) {
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
+  }
+};
+
+const updatePhoto = async (req, res) => {
+  const { id } = req.token;
+  try {
+    console.log(id);
+    await patch2Profiles(
+      {
+        photo: "/images/".req.file.filename,
+      },
+      { id_user: id }
+    );
+    const response = customResponse(201, "Success", {
+      photo: "/images/".req.file.filename,
+    });
+    resCustom(res, response);
+  } catch (err) {
+    const response = customResponse(500, { message: err.message });
+    resCustom(res, response);
   }
 };
 
@@ -132,4 +170,6 @@ module.exports = {
   getTransactions,
   getDetailTransaction,
   addTransaction,
+  updatePhoto,
+  getNotification,
 };
