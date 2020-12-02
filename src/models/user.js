@@ -14,7 +14,7 @@ LEFT JOIN cities AS c
 const getUser = `
 SELECT 
   a.*, b.username, b.address, 
-  b.postcode, c.name AS city
+  b.postcode, c.name AS city, b.photo
 FROM users AS a 
 INNER JOIN profiles AS b 
   ON a.id = b.id_user 
