@@ -1,11 +1,11 @@
 const { resCustom, customResponse } = require("../helpers/res");
-const { getUser, postUser } = require("../models/user");
+const { getUser, postUser, patchUser } = require("../models/user");
 const { postProfiles } = require("../models/profiles");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const AuthLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, device } = req.body;
 
   try {
     const checkUser = await getUser({ "a.email": email });
@@ -21,7 +21,9 @@ const AuthLogin = async (req, res) => {
     }
 
     const id = checkUser[0].id;
+    await patchUser({ gcm_token: device }, { id });
     const token = jwt.sign({ id }, process.env.SECRET);
+
     const response = customResponse(200, "Success", { token });
     resCustom(res, response);
   } catch (error) {

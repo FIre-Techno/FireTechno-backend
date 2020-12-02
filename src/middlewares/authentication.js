@@ -13,6 +13,7 @@ const loginValidate = (req, res, next) => {
   const schema = Joi.object({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
+    device: Joi.string(),
   });
   const validate = schema.validate(req.body, options);
 
