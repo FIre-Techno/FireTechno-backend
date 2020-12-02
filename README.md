@@ -16,6 +16,9 @@ And clone our code using:
 ```git
 $ git clone https://github.com/FIre-Techno/FireTechno-backend.git
 ```
+## Documentation
+
+https://documenter.getpostman.com/view/8840201/TVmLDeLd
 
 ## Installation
 Before installing, make sure you already have installed [Node.js](https://nodejs.org/en/) and [XAMPP](https://www.apachefriends.org/download.html)
