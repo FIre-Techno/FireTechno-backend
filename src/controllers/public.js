@@ -5,7 +5,13 @@ const {
   searchDestinations,
 } = require("../models/destinations");
 
+const admin = require("firebase-admin");
+
+const { patchTransactions, getDeviceId } = require("../models/transactions");
+
 const { getClass, getClassType } = require("../models/classes");
+const random = require("../helpers/random");
+const { postNotif } = require("../models/notifications");
 
 const allCities = async (req, res) => {
   try {
@@ -59,6 +65,8 @@ const getClasses = async (req, res) => {
     return resCustom(res, response);
   } catch (error) {
     console.log(error);
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
   }
 };
 
@@ -74,6 +82,38 @@ const oneClass = async (req, res) => {
     return resCustom(res, response);
   } catch (error) {
     console.log(error);
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
+  }
+};
+
+const confirmPayment = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const rand = random(22);
+    const device = await getDeviceId(id);
+    await patchTransactions({ status: 1, unique_code: rand }, id);
+
+    await postNotif({
+      title: "Success",
+      description: "You've been pay some ticket $" + device[0].price,
+    });
+
+    admin.messaging().sendToDevice(device[0].gcm_token, {
+      data: { id },
+      notification: {
+        clickAction: ".MainActivity",
+        title: `Success`,
+        body: "You've been pay some ticket" + device[0].price,
+      },
+    });
+
+    const response = customResponse(201, "Success pay ticket");
+    return resCustom(res, response);
+  } catch (error) {
+    console.log(error);
+    const response = customResponse(500, "Internal Server Error");
+    return resCustom(res, response);
   }
 };
 
@@ -83,4 +123,5 @@ module.exports = {
   findDestination,
   getClasses,
   oneClass,
+  confirmPayment,
 };

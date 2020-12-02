@@ -40,6 +40,15 @@ INNER JOIN destinations AS e
     ON c.id_destination = e.id
 WHERE ?`;
 
+const getDeviceId = `
+SELECT c.price, b.gcm_token, b.id FROM transactions AS a
+INNER JOIN users AS b 
+    ON a.id_user = b.id
+INNER JOIN classes AS c
+    ON c.id = a.id_class
+WHERE a.id = ?
+`;
+
 const postTransactions = `insert into transactions set ?`;
 
 const patchTransactions = `Update transactions set ? where id=?`;
@@ -47,9 +56,10 @@ const patchTransactions = `Update transactions set ? where id=?`;
 const deleteTransactions = `delete from transactions where id=?`;
 
 module.exports = {
-    getAllTransactions: () => query(getAllTransactions),
-    getIdTransactions: (id) => query(getIdTransactions, id),
-    postTransactions: (setData) => query(postTransactions, setData),
-    patchTransactions: (setData, id) => query(patchTransactions, [setData, id]),
-    deleteTransactions: (id) => query(deleteTransactions, id),
+  getAllTransactions: () => query(getAllTransactions),
+  getIdTransactions: (id) => query(getIdTransactions, id),
+  getDeviceId: (id) => query(getDeviceId, id),
+  postTransactions: (setData) => query(postTransactions, setData),
+  patchTransactions: (setData, id) => query(patchTransactions, [setData, id]),
+  deleteTransactions: (id) => query(deleteTransactions, id),
 };

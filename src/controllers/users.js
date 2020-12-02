@@ -84,7 +84,7 @@ const updatePhoto = async (req, res) => {
       { id_user: id }
     );
     const response = customResponse(201, "Success", {
-      photo: "/images/".req.file.filename,
+      photo: "/images/" + req.file.filename,
     });
     resCustom(res, response);
   } catch (err) {

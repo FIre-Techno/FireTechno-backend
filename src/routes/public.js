@@ -8,6 +8,7 @@ const {
   findDestination,
   getClasses,
   oneClass,
+  confirmPayment,
 } = require("../controllers/public");
 
 router
@@ -15,6 +16,7 @@ router
   .get("/destination", allDestination)
   .get("/destination/find", findDestination)
   .get("/classes", getClasses)
-  .get("/classes/:id", oneClass);
+  .get("/classes/:id", oneClass)
+  .patch("/pay/:id", confirmPayment);
 
 module.exports = router;
