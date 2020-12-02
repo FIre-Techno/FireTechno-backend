@@ -99,14 +99,16 @@ const confirmPayment = async (req, res) => {
       description: "You've been pay some ticket $" + device[0].price,
     });
 
-    admin.messaging().sendToDevice(device[0].gcm_token, {
-      data: { id },
-      notification: {
-        clickAction: ".MainActivity",
-        title: `Success`,
-        body: "You've been pay some ticket" + device[0].price,
-      },
-    });
+    if (device[0].gcm_token) {
+      admin.messaging().sendToDevice(device[0].gcm_token, {
+        data: { id },
+        notification: {
+          clickAction: ".MainActivity",
+          title: `Success`,
+          body: "You've been pay some ticket" + device[0].price,
+        },
+      });
+    }
 
     const response = customResponse(201, "Success pay ticket");
     return resCustom(res, response);
