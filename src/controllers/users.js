@@ -79,7 +79,7 @@ const updatePhoto = async (req, res) => {
     console.log(id);
     await patch2Profiles(
       {
-        photo: "/images/".req.file.filename,
+        photo: "/images/" + req.file.filename,
       },
       { id_user: id }
     );
