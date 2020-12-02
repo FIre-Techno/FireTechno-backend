@@ -97,6 +97,7 @@ const confirmPayment = async (req, res) => {
     await postNotif({
       title: "Success",
       description: "You've been pay some ticket $" + device[0].price,
+      id_user: device[0].id,
     });
 
     if (device[0].gcm_token) {
