@@ -5,7 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const admin = require("firebase-admin");
-const serviceAccount = require("./credential/ankasa-59210-firebase-adminsdk-xuymg-b81fe9cff6.json");
+const serviceAccount = require("./credential/ankasa-4e49d-firebase-adminsdk-1srtp-ea5ee186be.json");
 const mysql = require("./src/configs/mysql");
 
 const verify = require("./src/middlewares/auth");
