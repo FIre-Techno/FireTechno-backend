@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 //dibawah ini adalah untuk adalah cretendial yang dibutuh kan untuk firebase
 const admin = require("firebase-admin");
-const serviceAccount = require("./credential/ankasa-4e49d-firebase-adminsdk-1srtp-ea5ee186be.json");
+const serviceAccount = require("./credential/ankasa-59210-firebase-adminsdk-xuymg-49ad22b3b5.json");
 //end
 
 const mysql = require("./src/configs/mysql");
