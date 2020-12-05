@@ -87,13 +87,17 @@ const oneClass = async (req, res) => {
   }
 };
 
+
+// nah disini tempat notifikasi terjadi
 const confirmPayment = async (req, res) => {
   const { id } = req.params;
   try {
     const rand = random(22);
+//get device token
     const device = await getDeviceId(id);
     await patchTransactions({ status: 1, unique_code: rand }, id);
 
+//ini dia data2 notif
     await postNotif({
       title: "Success",
       description: "You've been pay some ticket " + device[0].price,
@@ -110,7 +114,7 @@ const confirmPayment = async (req, res) => {
         },
       });
     }
-
+// sampe sini
     const response = customResponse(201, "Success pay ticket");
     return resCustom(res, response);
   } catch (error) {
@@ -119,6 +123,8 @@ const confirmPayment = async (req, res) => {
     return resCustom(res, response);
   }
 };
+
+//end
 
 module.exports = {
   allCities,
