@@ -22,7 +22,7 @@ const exampleValidate = (req, res, next) => {
 router
   .get("/", function (req, res, next) {
     res.json({
-      message: "Running",
+      message: "Docker1 12 Running",
     });
   })
   .get("/example", getUsers)

@@ -96,7 +96,7 @@ const confirmPayment = async (req, res) => {
 
     await postNotif({
       title: "Success",
-      description: "You've been pay some ticket $" + device[0].price,
+      description: "You've been pay some ticket " + device[0].price,
       id_user: device[0].id,
     });
 
