@@ -27,6 +27,7 @@ const AuthLogin = async (req, res) => {
     const response = customResponse(200, "Success", { token });
     resCustom(res, response);
   } catch (error) {
+    console.log(error);
     const response = customResponse(500, "Internal Server Error");
     resCustom(res, response);
   }

@@ -4,11 +4,9 @@ const logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-//dibawah ini adalah untuk adalah cretendial yang dibutuh kan untuk firebase
+
 const admin = require("firebase-admin");
 const serviceAccount = require("./credential/ankasa-59210-firebase-adminsdk-xuymg-49ad22b3b5.json");
-//end
-
 const mysql = require("./src/configs/mysql");
 
 const verify = require("./src/middlewares/auth");
@@ -31,42 +29,13 @@ const app = express();
 
 const prefix = process.env.PREFIX_URL;
 
-mysql.connect((err) => {
-  console.log(err ? err : "database working");
-});
+mysql.dbConnect();
 
-// dibawah ini adalah untuk menginsialisasi firebase, ada ketika mendaftarkan firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://ankasa-59210.firebaseio.com",
 });
-/// end
 
-// dibawwah   iniadalah percobaan untuk mengirim notifikasi ke device
-// registration ini adalah data device token dari firebase. yang dimana didapatkan ketika user login seharusnya dinamis tetapi ini hanya percobaan 
-
-const registrationToken =
-  "d7FvKIqER9ysIyjqiPKFph:APA91bHKKLF-bpEDxhHWc2QK8nHgURAT3mSLkw6YuFcPPf1XfWytaYN2jSVjfvhXZGn9fo7uH5ZzZ3CGHXrpTqkJ9sO-1VAFkXdbvEwYjIG2cpmrJXYNRHwcSoYgsXCf7EWrC_tZSSHc";
-const payload = {
-  notification: {
-    title: "Zwallet",
-    body: `you just receive money from  as much as Rp`,
-  },
-};
-
-admin
-  .messaging()
-  .sendToDevice(registrationToken, payload)
-  .then(function (response) {
-    // See the MessagingDevicesResponse reference documentation for
-    // the contents of response.
-    console.log("Successfully sent message:", response);
-  })
-  .catch(function (error) {
-    console.log("Error sending message:", error);
-  });
-
-/// end
 app.use(express.static("public"));
 app.use(cors("*"));
 app.use(logger("dev"));
