@@ -5,24 +5,23 @@ name: CI CD
 
 on:
   push:
-    branches: [ production ]
+    branches: [production]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: cicd
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.KEY }}
-        port: 22
-        script: |
-          cd ~/apps/backend/ticketing
-          git pull origin production
-          yarn
-          docker-compose up -d --build
+      - uses: actions/checkout@v2
+      - name: cicd
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            cd ~/apps/backend/ticketing
+            git pull origin production
+            yarn
+            sudo docker-compose up -d --build
