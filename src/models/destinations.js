@@ -1,4 +1,3 @@
-const db = require("../configs/mysql");
 const query = require("../helpers/query");
 
 module.exports = {
