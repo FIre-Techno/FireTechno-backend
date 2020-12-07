@@ -12,7 +12,7 @@ exports.connection = connection;
 const connect = () => {
   connection.connect((err) => {
     if (err) {
-      console.log("restart database");
+      console.log(err);
       setTimeout(connect, 2000);
     }
 
