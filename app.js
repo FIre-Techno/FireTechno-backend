@@ -29,7 +29,7 @@ const app = express();
 
 const prefix = process.env.PREFIX_URL;
 
-mysql.dbConnect();
+// mysql.dbConnect();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

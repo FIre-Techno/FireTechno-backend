@@ -1,6 +1,6 @@
 const mysql = require("mysql2");
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOSTNAME || "localhost",
   user: process.env.DB_USERNAME || "root",
   password: process.env.DB_PASSWORD || "",
@@ -9,22 +9,22 @@ const connection = mysql.createConnection({
 
 exports.connection = connection;
 
-const connect = () => {
-  connection.connect((err) => {
-    if (err) {
-      console.log(err);
-      setTimeout(connect, 2000);
-    }
+// const connect = () => {
+//   connection.connect((err) => {
+//     if (err) {
+//       console.log(err);
+//       setTimeout(connect, 2000);
+//     }
 
-    console.log("connected");
-  });
+//     console.log("connected");
+//   });
 
-  connection.on("error", (err) => {
-    console.log(err);
-    if (err) {
-      connect();
-    }
-  });
-};
+//   connection.on("error", (err) => {
+//     console.log(err);
+//     if (err) {
+//       connect();
+//     }
+//   });
+// };
 
-exports.dbConnect = connect;
+// exports.dbConnect = connect;

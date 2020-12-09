@@ -84,7 +84,6 @@ function onError(error) {
 }
 
 app.use((req, res, next) => {
-  req.io = io;
   next();
 });
 
