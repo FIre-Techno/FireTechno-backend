@@ -24,8 +24,6 @@ var server = http.createServer(app);
  * Create Socket.
  */
 
-const io = require("socket.io")(server);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -38,15 +36,6 @@ console.log("Server Running", process.env.PORT || 3000);
 /**
  * connection socket.
  */
-io.on('connection', (socket) => {
-  console.log('a user connection')
-  socket.on('chat-message', msg => {
-    console.log(msg)
-  });
-  socket.on('disconnect', () => {
-    console.log('a user disconnection')
-  })
-});
 
 /**
  * Normalize a port into a number, string, or false.
@@ -97,7 +86,7 @@ function onError(error) {
 app.use((req, res, next) => {
   req.io = io;
   next();
-})
+});
 
 /**
  * Event listener for HTTP server "listening" event.
